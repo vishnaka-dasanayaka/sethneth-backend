@@ -8,12 +8,14 @@
     "@sailshq/connect-redis": "^6.1.3",
     "@sailshq/lodash": "^3.10.6",
     "@sailshq/socket.io-redis": "^6.1.2",
+    "jsonwebtoken": "^9.0.2",
     "sails": "^1.5.14",
     "sails-hook-apianalytics": "^2.0.6",
     "sails-hook-organics": "^3.0.0",
     "sails-hook-orm": "^4.0.3",
     "sails-hook-sockets": "^3.0.0",
-    "sails-mysql": "^3.0.1"
+    "sails-mysql": "^3.0.1",
+    "speakeasy": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "5.16.0",

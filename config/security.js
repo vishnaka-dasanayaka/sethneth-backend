@@ -43,4 +43,7 @@ module.exports.security = {
    ****************************************************************************/
 
   //csrf: true,
+
+  allowRequestMethods: "GET, POST, PUT, DELETE, OPTIONS, HEAD",
+  allowRequestHeaders: "Content-Type, Authorization",
 };

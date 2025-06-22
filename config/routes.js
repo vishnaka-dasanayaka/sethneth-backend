@@ -80,4 +80,7 @@ module.exports.routes = {
   "POST /api/v1/settings/user/login": {
     action: "settings/user/login",
   },
+  "GET /api/v1/settings/user/validate-logged-in": {
+    action: "settings/user/validate-logged-in",
+  },
 };

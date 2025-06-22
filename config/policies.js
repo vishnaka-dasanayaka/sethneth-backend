@@ -13,7 +13,7 @@ module.exports.policies = {
 
   SettingsController: {
     "user/login": true,
-    "user/get-latest-version": true,
+    //"user/get-latest-version": true,
   },
 
   // Bypass the `is-logged-in` policy for:

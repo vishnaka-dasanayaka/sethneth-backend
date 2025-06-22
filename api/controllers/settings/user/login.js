@@ -15,10 +15,10 @@ module.exports = {
       required: true,
       type: "string",
     },
-    // step: {
-    //   required: true,
-    //   type: "number",
-    // },
+    step: {
+      required: true,
+      type: "number",
+    },
     token: {
       allowNull: true,
       type: "string",
@@ -45,27 +45,27 @@ module.exports = {
       });
     }
 
-    if (sails.config.environment === "production") {
-      if (userRecord.allowed_ips != null) {
-        if (
-          this.req.headers["x-real-ip"] &&
-          this.req.headers["x-real-ip"] != null
-        ) {
-          userRecord.allowed_ips = userRecord.allowed_ips.split(",");
-          if (!userRecord.allowed_ips.includes(this.req.headers["x-real-ip"])) {
-            return exits.OtherError({
-              status: false,
-              err: "Login IP address is not a authorized",
-            });
-          }
-        } else {
-          return exits.OtherError({
-            status: false,
-            err: "Invalid login IP Details.",
-          });
-        }
-      }
-    }
+    // if (sails.config.environment === "production") {
+    //   if (userRecord.allowed_ips != null) {
+    //     if (
+    //       this.req.headers["x-real-ip"] &&
+    //       this.req.headers["x-real-ip"] != null
+    //     ) {
+    //       userRecord.allowed_ips = userRecord.allowed_ips.split(",");
+    //       if (!userRecord.allowed_ips.includes(this.req.headers["x-real-ip"])) {
+    //         return exits.OtherError({
+    //           status: false,
+    //           err: "Login IP address is not a authorized",
+    //         });
+    //       }
+    //     } else {
+    //       return exits.OtherError({
+    //         status: false,
+    //         err: "Invalid login IP Details.",
+    //       });
+    //     }
+    //   }
+    // }
 
     // If the user is disabled, prevent log in
     if (userRecord.disabled == 1) {
@@ -86,6 +86,7 @@ module.exports = {
       });
 
     var two_factor_enabled = 0;
+
     if (inputs.step == 1) {
       if (userRecord.two_factor_status == 0) {
         // Generate Token if password match

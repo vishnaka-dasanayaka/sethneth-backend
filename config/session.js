@@ -1,39 +1,22 @@
-/**
- * Session Configuration
- * (sails.config.session)
- *
- * Use the settings below to configure session integration in your app.
- * (for additional recommended settings, see `config/env/production.js`)
- *
- * For all available options, see:
- * https://sailsjs.com/config/session
- */
+const session = require("express-session");
+const MySQLStore = require("express-mysql-session")(session);
+
+const storeInstance = new MySQLStore({
+  host: "localhost",
+  port: 3306,
+  user: "root",
+  password: "root",
+  database: "sethneth",
+  clearExpired: true,
+  checkExpirationInterval: 900000,
+  expiration: 86400000,
+});
 
 module.exports.session = {
-
-  /***************************************************************************
-  *                                                                          *
-  * Session secret is automatically generated when your new app is created   *
-  * Replace at your own risk in production-- you will invalidate the cookies *
-  * of your users, forcing them to log in again.                             *
-  *                                                                          *
-  ***************************************************************************/
-  secret: '9ccc81f5b962dad8b2baa00512c63fc3',
-
-
-  /***************************************************************************
-  *                                                                          *
-  * Customize when built-in session support will be skipped.                 *
-  *                                                                          *
-  * (Useful for performance tuning; particularly to avoid wasting cycles on  *
-  * session management when responding to simple requests for static assets, *
-  * like images or stylesheets.)                                             *
-  *                                                                          *
-  * https://sailsjs.com/config/session                                       *
-  *                                                                          *
-  ***************************************************************************/
-  // isSessionDisabled: function (req){
-  //   return !!req.path.match(req._sails.LOOKS_LIKE_ASSET_RX);
-  // },
-
+  secret: "9ccc81f5b962dad8b2baa00512c63fc3",
+  store: storeInstance,
+  cookie: {
+    secure: true,
+    maxAge: 24 * 60 * 60 * 1000,
+  },
 };

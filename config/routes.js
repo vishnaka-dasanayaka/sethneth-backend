@@ -83,4 +83,15 @@ module.exports.routes = {
   "GET /api/v1/settings/user/validate-logged-in": {
     action: "settings/user/validate-logged-in",
   },
+
+  // settings
+
+  // supplier
+  "POST /api/v1/settings/supplier": {
+    action: "settings/supplier/create-supplier",
+  },
+
+  "POST /api/v1/settings/supplier/all": {
+    action: "settings/supplier/get-all-paged-suppliers",
+  },
 };

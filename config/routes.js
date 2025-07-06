@@ -94,4 +94,12 @@ module.exports.routes = {
   "POST /api/v1/settings/supplier/all": {
     action: "settings/supplier/get-all-paged-suppliers",
   },
+
+  "GET /api/v1/settings/supplier/:id": {
+    action: "settings/supplier/get-supplier",
+  },
+
+  "PATCH /api/v1/settings/supplier/update-status": {
+    action: "settings/supplier/update-status",
+  },
 };

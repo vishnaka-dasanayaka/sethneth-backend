@@ -38,9 +38,9 @@ module.exports = {
       order_by = " t1.status ";
     }
 
-    var order_method = " DESC ";
+    var order_method = " ASC ";
     if (inputs.event.sortOrder == -1) {
-      order_method = " ASC ";
+      order_method = " DESC ";
     }
 
     var global_search_filter = "";
@@ -48,24 +48,23 @@ module.exports = {
       if (inputs.event.filters.global.matchMode == "contains") {
         var search_text = inputs.event.filters.global.value;
         global_search_filter =
-          "  WHERE (t1.client_code LIKE '%" +
+          "  WHERE (t1.code LIKE '%" +
           search_text +
           "%' OR t1.name LIKE '%" +
           search_text +
-          "%' OR t1.nic_or_passport_no LIKE '%" +
+          "%' OR t1.contact_person LIKE '%" +
           search_text +
-          "%' OR t1.address LIKE '%" +
-          search_text +
-          "%' OR t1.contact_no LIKE '%" +
+          "%' OR t1.phone LIKE '%" +
           search_text +
           "%' OR t1.email LIKE '%" +
           search_text +
-          "%') AND ";
+          "%') ";
       }
     }
 
     var suppliers_sql =
       "SELECT t1.* from suppliers t1 " +
+      global_search_filter +
       " ORDER by " +
       order_by +
       order_method +
@@ -73,6 +72,8 @@ module.exports = {
       offset +
       "," +
       rows;
+
+    console.log(suppliers_sql);
 
     var suppliers = await sails.sendNativeQuery(suppliers_sql);
     suppliers = suppliers.rows;

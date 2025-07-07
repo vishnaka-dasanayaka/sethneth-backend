@@ -1,5 +1,5 @@
 module.exports = {
-  friendlyName: "Get all paged suppliers",
+  friendlyName: "Get all paged purchase_orders",
 
   description: "",
 
@@ -26,14 +26,12 @@ module.exports = {
 
     // sorting
     var order_by = " t1.code ";
-    if (inputs.event.sortField == "name") {
-      order_by = " t1.name ";
-    } else if (inputs.event.sortField == "contact_person") {
-      order_by = " t1.contact_person ";
-    } else if (inputs.event.sortField == "phone") {
-      order_by = " t1.phone ";
-    } else if (inputs.event.sortField == "email") {
-      order_by = " t1.email ";
+    if (inputs.event.sortField == "supplier") {
+      order_by = " t2.name ";
+    } else if (inputs.event.sortField == "date") {
+      order_by = " t1.date ";
+    } else if (inputs.event.sortField == "amount") {
+      order_by = " t1.amount ";
     } else if (inputs.event.sortField == "status") {
       order_by = " t1.status ";
     }
@@ -50,20 +48,17 @@ module.exports = {
         global_search_filter =
           "  WHERE (t1.code LIKE '%" +
           search_text +
-          "%' OR t1.name LIKE '%" +
+          "%' OR t2.name LIKE '%" +
           search_text +
-          "%' OR t1.contact_person LIKE '%" +
-          search_text +
-          "%' OR t1.phone LIKE '%" +
-          search_text +
-          "%' OR t1.email LIKE '%" +
+          "%' OR t1.amount LIKE '%" +
           search_text +
           "%') ";
       }
     }
 
-    var suppliers_sql =
-      "SELECT t1.* from suppliers t1 " +
+    var purchase_orders_sql =
+      "SELECT t1.*, t2.name AS supplier_name from purchase_orders t1 " +
+      "LEFT JOIN suppliers t2 ON t2.id = t1.supplier " +
       global_search_filter +
       " ORDER by " +
       order_by +
@@ -73,21 +68,22 @@ module.exports = {
       "," +
       rows;
 
-    var suppliers = await sails.sendNativeQuery(suppliers_sql);
-    suppliers = suppliers.rows;
+    console.log(purchase_orders_sql);
+
+    var purchase_orders = await sails.sendNativeQuery(purchase_orders_sql);
+    purchase_orders = purchase_orders.rows;
 
     var clients_count_sql =
-      "SELECT COUNT(*) as no_of_suppliers from suppliers t1 " +
+      "SELECT COUNT(*) as no_of_purchase_orders from purchase_orders t1 " +
+      "LEFT JOIN suppliers t2 ON t2.id = t1.supplier " +
       global_search_filter;
 
-    var suppliers_count = await sails.sendNativeQuery(clients_count_sql);
-    suppliers_count = suppliers_count.rows[0].no_of_suppliers;
+    var purchase_orders_count = await sails.sendNativeQuery(clients_count_sql);
+    purchase_orders_count = purchase_orders_count.rows[0].no_of_purchase_orders;
 
     return exits.success({
-      suppliers: suppliers,
-      no_of_suppliers: suppliers_count,
-      //disabled_students: disabled_students,
-      // no_of_disabled_students: records_disable,
+      purchase_orders: purchase_orders,
+      no_of_purchase_orders: purchase_orders_count,
     });
   },
 };

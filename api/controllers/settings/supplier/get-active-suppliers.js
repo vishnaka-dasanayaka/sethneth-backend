@@ -3,30 +3,17 @@ module.exports = {
 
   description: "",
 
-  inputs: {
-    id: {
-      required: true,
-      type: "string",
-    },
-  },
+  inputs: {},
 
   exits: {},
 
   fn: async function (inputs, exits) {
     try {
-      var supplier = await Supplier.findOne({ id: inputs.id }).populate(
-        "created_by"
-      );
-      if (!supplier) {
-        return exits.success({
-          status: false,
-          err: "Supplier Not Found",
-        });
-      }
+      var suppliers = await Supplier.find({ status: 2 });
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        suppliers: suppliers,
       });
     } catch (e) {
       const errorInfo =

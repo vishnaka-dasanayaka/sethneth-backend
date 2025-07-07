@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 module.exports = {
   friendlyName: "Add Client",
 
@@ -6,7 +8,7 @@ module.exports = {
   inputs: {
     id: {
       required: true,
-      type: "string",
+      type: "number",
     },
   },
 
@@ -14,19 +16,22 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      var supplier = await Supplier.findOne({ id: inputs.id }).populate(
-        "created_by"
-      );
-      if (!supplier) {
+      var purchase_order = await PurchaseOrder.findOne({
+        id: inputs.id,
+      })
+        .populate("supplier")
+        .populate("created_by");
+
+      if (!purchase_order) {
         return exits.success({
           status: false,
-          err: "Supplier Not Found",
+          err: "Purchase Order is not found",
         });
       }
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        purchase_order: purchase_order,
       });
     } catch (e) {
       const errorInfo =
@@ -35,7 +40,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/get-supplier",
+        path: "api/v1/stock/create-purchase-order",
         info: errorInfo,
       });
       return exits.success({

@@ -4,29 +4,18 @@ module.exports = {
   description: "",
 
   inputs: {
-    id: {
-      required: true,
-      type: "string",
-    },
+    id: { type: "number", required: true },
   },
 
   exits: {},
 
   fn: async function (inputs, exits) {
     try {
-      var supplier = await Supplier.findOne({ id: inputs.id }).populate(
-        "created_by"
-      );
-      if (!supplier) {
-        return exits.success({
-          status: false,
-          err: "Supplier Not Found",
-        });
-      }
+      var purchase_orders = await PurchaseOrder.find({ supplier: inputs.id });
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        purchase_orders: purchase_orders,
       });
     } catch (e) {
       const errorInfo =

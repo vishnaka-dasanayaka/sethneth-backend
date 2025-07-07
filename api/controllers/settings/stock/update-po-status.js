@@ -31,23 +31,23 @@ module.exports = {
       //   });
       // });
 
-      var supplier = await Supplier.findOne({ id: inputs.id });
-      if (!supplier) {
+      var purchase_order = await Supplier.findOne({ id: inputs.id });
+      if (!purchase_order) {
         return exits.success({
           status: false,
-          err: "Supplier Not Found",
+          err: "Purchase Order Not Found",
         });
       }
 
-      await Supplier.updateOne({ id: inputs.id }).set({
+      await PurchaseOrder.updateOne({ id: inputs.id }).set({
         status: inputs.status,
       });
 
       await SystemLog.create({
         userid: this.req.token.id,
         info:
-          "Update the status of supplier of ID :" +
-          supplier.id +
+          "Update the status of purchase order of ID :" +
+          purchase_order.id +
           " to " +
           inputs.status,
       });
@@ -62,7 +62,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/update-status",
+        path: "api/v1/purchase_order/update-status",
         info: errorInfo,
       });
       return exits.success({

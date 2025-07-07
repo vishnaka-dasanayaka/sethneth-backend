@@ -87,12 +87,16 @@ module.exports.routes = {
   // settings
 
   // supplier
-  "POST /api/v1/settings/supplier": {
+  "POST /api/v1/settings/supplier/create-supplier": {
     action: "settings/supplier/create-supplier",
   },
 
-  "POST /api/v1/settings/supplier/all": {
+  "POST /api/v1/settings/supplier/get-all-paged-suppliers": {
     action: "settings/supplier/get-all-paged-suppliers",
+  },
+
+  "POST /api/v1/settings/supplier/get-purchase-orders-per-supplier": {
+    action: "settings/supplier/get-purchase-orders-per-supplier",
   },
 
   "GET /api/v1/settings/supplier/:id": {
@@ -101,5 +105,26 @@ module.exports.routes = {
 
   "PATCH /api/v1/settings/supplier/update-status": {
     action: "settings/supplier/update-status",
+  },
+
+  "GET /api/v1/settings/supplier/get-active-suppliers": {
+    action: "settings/supplier/get-active-suppliers",
+  },
+
+  // stock
+  "POST /api/v1/settings/stock/create-purchase-order": {
+    action: "settings/stock/create-purchase-order",
+  },
+
+  "POST /api/v1/settings/stock/get-all-paged-purchase-orders": {
+    action: "settings/stock/get-all-paged-purchase-orders",
+  },
+
+  "POST /api/v1/settings/stock/get-purchase-order": {
+    action: "settings/stock/get-purchase-order",
+  },
+
+  "PATCH /api/v1/settings/stock/update-po-status": {
+    action: "settings/stock/update-po-status",
   },
 };

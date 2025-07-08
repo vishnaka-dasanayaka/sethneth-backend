@@ -68,8 +68,6 @@ module.exports = {
       "," +
       rows;
 
-    console.log(purchase_orders_sql);
-
     var purchase_orders = await sails.sendNativeQuery(purchase_orders_sql);
     purchase_orders = purchase_orders.rows;
 

@@ -1,25 +1,19 @@
 module.exports = {
-  friendlyName: "Add Client",
+  friendlyName: "Add Brand",
 
   description: "",
 
   inputs: {
-    contact_person: {
+    brand: {
       required: true,
       type: "string",
     },
-    email: {
-      type: "string",
+
+    category: {
+      type: "ref",
       required: true,
     },
-    phone: {
-      required: true,
-      type: "string",
-    },
-    supplier_name: {
-      required: true,
-      type: "string",
-    },
+
     uniquekey: {
       required: true,
       type: "string",
@@ -29,6 +23,8 @@ module.exports = {
   exits: {},
 
   fn: async function (inputs, exits) {
+    console.log(inputs);
+
     try {
       // var uniqueRequest = await UniqueReq.create({
       //   uniquecheck: inputs.uniquekey,
@@ -39,48 +35,39 @@ module.exports = {
       //   });
       // });
 
-      let existing_email = null;
+      let existing_brand = null;
 
-      if (inputs.email !== null && inputs.email !== undefined) {
-        existing_email = await Supplier.findOne({ email: inputs.email });
-      }
-
-      if (existing_email) {
-        return exits.success({
-          status: false,
-          err: "A Supplier found with same primary email address",
+      if (inputs.brand !== null && inputs.brand !== undefined) {
+        existing_brand = await Brand.findOne({
+          name: inputs.brand,
         });
       }
 
-      var prefix = "SUP";
+      if (existing_brand) {
+        return exits.success({
+          status: false,
+          err: "A Brand find with the same name",
+        });
+      }
 
-      var generatedid = await sails.helpers.generateCode(
-        (inputs.type = "SUP"),
-        prefix
-      );
-
-      var supplier = await Supplier.create({
-        code: generatedid,
-        name: inputs.supplier_name,
-        contact_person: inputs.contact_person,
-        phone: inputs.phone,
-        email: inputs.email,
+      var brand = await Brand.create({
+        name: inputs.brand,
         created_by: this.req.token.id,
       }).fetch();
+
+      for (var item of inputs.category) {
+        await BrandCategory.create({ brand: brand.id, category: item });
+      }
 
       // System Log record
       await SystemLog.create({
         userid: this.req.token.id,
-        info:
-          "Created a supplier of ID :" +
-          supplier.id +
-          " - " +
-          supplier.client_code,
+        info: "Created a brand of ID :" + brand.id,
       });
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        brand: brand,
       });
     } catch (e) {
       const errorInfo =
@@ -89,7 +76,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/create-supplier",
+        path: "api/v1/stock/create-brand",
         info: errorInfo,
       });
       return exits.success({

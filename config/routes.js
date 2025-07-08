@@ -127,4 +127,28 @@ module.exports.routes = {
   "PATCH /api/v1/settings/stock/update-po-status": {
     action: "settings/stock/update-po-status",
   },
+
+  "POST /api/v1/settings/stock/create-category": {
+    action: "settings/stock/create-category",
+  },
+
+  "POST /api/v1/settings/stock/get-all-paged-categories": {
+    action: "settings/stock/get-all-paged-categories",
+  },
+
+  "PATCH /api/v1/settings/stock/update-category-status": {
+    action: "settings/stock/update-category-status",
+  },
+
+  "POST /api/v1/settings/stock/create-brand": {
+    action: "settings/stock/create-brand",
+  },
+
+  "GET /api/v1/settings/stock/get-active-categories": {
+    action: "settings/stock/get-active-categories",
+  },
+
+  "POST /api/v1/settings/stock/get-all-paged-brands": {
+    action: "settings/stock/get-all-paged-brands",
+  },
 };

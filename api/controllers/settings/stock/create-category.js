@@ -1,25 +1,14 @@
 module.exports = {
-  friendlyName: "Add Client",
+  friendlyName: "Add Category",
 
   description: "",
 
   inputs: {
-    contact_person: {
+    category: {
       required: true,
       type: "string",
     },
-    email: {
-      type: "string",
-      required: true,
-    },
-    phone: {
-      required: true,
-      type: "string",
-    },
-    supplier_name: {
-      required: true,
-      type: "string",
-    },
+
     uniquekey: {
       required: true,
       type: "string",
@@ -39,48 +28,35 @@ module.exports = {
       //   });
       // });
 
-      let existing_email = null;
+      let existing_category = null;
 
-      if (inputs.email !== null && inputs.email !== undefined) {
-        existing_email = await Supplier.findOne({ email: inputs.email });
-      }
-
-      if (existing_email) {
-        return exits.success({
-          status: false,
-          err: "A Supplier found with same primary email address",
+      if (inputs.category !== null && inputs.category !== undefined) {
+        existing_category = await Category.findOne({
+          name: inputs.category,
         });
       }
 
-      var prefix = "SUP";
+      if (existing_category) {
+        return exits.success({
+          status: false,
+          err: "A Category find with the same name",
+        });
+      }
 
-      var generatedid = await sails.helpers.generateCode(
-        (inputs.type = "SUP"),
-        prefix
-      );
-
-      var supplier = await Supplier.create({
-        code: generatedid,
-        name: inputs.supplier_name,
-        contact_person: inputs.contact_person,
-        phone: inputs.phone,
-        email: inputs.email,
+      var category = await Category.create({
+        name: inputs.category,
         created_by: this.req.token.id,
       }).fetch();
 
       // System Log record
       await SystemLog.create({
         userid: this.req.token.id,
-        info:
-          "Created a supplier of ID :" +
-          supplier.id +
-          " - " +
-          supplier.client_code,
+        info: "Created a category of ID :" + category.id,
       });
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        category: category,
       });
     } catch (e) {
       const errorInfo =
@@ -89,7 +65,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/create-supplier",
+        path: "api/v1/stock/create-category",
         info: errorInfo,
       });
       return exits.success({

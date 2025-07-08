@@ -4,21 +4,13 @@ module.exports = {
   description: "",
 
   inputs: {
-    contact_person: {
+    id: {
       required: true,
       type: "string",
     },
-    email: {
-      type: "string",
+    status: {
       required: true,
-    },
-    phone: {
-      required: true,
-      type: "string",
-    },
-    supplier_name: {
-      required: true,
-      type: "string",
+      type: "number",
     },
     uniquekey: {
       required: true,
@@ -39,48 +31,29 @@ module.exports = {
       //   });
       // });
 
-      let existing_email = null;
-
-      if (inputs.email !== null && inputs.email !== undefined) {
-        existing_email = await Supplier.findOne({ email: inputs.email });
-      }
-
-      if (existing_email) {
+      var category = await Category.findOne({ id: inputs.id });
+      if (!category) {
         return exits.success({
           status: false,
-          err: "A Supplier found with same primary email address",
+          err: "Purchase Order Not Found",
         });
       }
 
-      var prefix = "SUP";
+      await Category.updateOne({ id: inputs.id }).set({
+        status: inputs.status,
+      });
 
-      var generatedid = await sails.helpers.generateCode(
-        (inputs.type = "SUP"),
-        prefix
-      );
-
-      var supplier = await Supplier.create({
-        code: generatedid,
-        name: inputs.supplier_name,
-        contact_person: inputs.contact_person,
-        phone: inputs.phone,
-        email: inputs.email,
-        created_by: this.req.token.id,
-      }).fetch();
-
-      // System Log record
       await SystemLog.create({
         userid: this.req.token.id,
         info:
-          "Created a supplier of ID :" +
-          supplier.id +
-          " - " +
-          supplier.client_code,
+          "Update the status of purchase order of ID :" +
+          category.id +
+          " to " +
+          inputs.status,
       });
 
       return exits.success({
         status: true,
-        supplier: supplier,
       });
     } catch (e) {
       const errorInfo =
@@ -89,7 +62,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/create-supplier",
+        path: "api/v1/category/update-category-status",
         info: errorInfo,
       });
       return exits.success({

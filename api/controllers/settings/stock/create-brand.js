@@ -23,8 +23,6 @@ module.exports = {
   exits: {},
 
   fn: async function (inputs, exits) {
-    console.log(inputs);
-
     try {
       // var uniqueRequest = await UniqueReq.create({
       //   uniquecheck: inputs.uniquekey,

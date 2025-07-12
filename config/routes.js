@@ -148,7 +148,39 @@ module.exports.routes = {
     action: "settings/stock/get-active-categories",
   },
 
+  "GET /api/v1/settings/stock/get-active-brands": {
+    action: "settings/stock/get-active-brands",
+  },
+
   "POST /api/v1/settings/stock/get-all-paged-brands": {
     action: "settings/stock/get-all-paged-brands",
+  },
+
+  "POST /api/v1/settings/stock/create-model": {
+    action: "settings/stock/create-model",
+  },
+
+  "POST /api/v1/settings/stock/create-stock": {
+    action: "settings/stock/create-stock",
+  },
+
+  "POST /api/v1/settings/stock/get-all-paged-models": {
+    action: "settings/stock/get-all-paged-models",
+  },
+
+  "POST /api/v1/settings/stock/get-all-paged-stocks": {
+    action: "settings/stock/get-all-paged-stocks",
+  },
+
+  "POST /api/v1/settings/stock/get-active-brands-per-category": {
+    action: "settings/stock/get-active-brands-per-category",
+  },
+
+  "POST /api/v1/settings/stock/get-active-models-per-brand": {
+    action: "settings/stock/get-active-models-per-brand",
+  },
+
+  "POST /api/v1/settings/stock/get-active-po-per-supplier": {
+    action: "settings/stock/get-active-po-per-supplier",
   },
 };

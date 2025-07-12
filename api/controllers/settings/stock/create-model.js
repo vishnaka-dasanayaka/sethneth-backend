@@ -1,25 +1,19 @@
 module.exports = {
-  friendlyName: "Add Client",
+  friendlyName: "Add Brand",
 
   description: "",
 
   inputs: {
-    contact_person: {
+    model: {
       required: true,
       type: "string",
     },
-    email: {
-      type: "string",
+
+    brand: {
+      type: "number",
       required: true,
     },
-    phone: {
-      required: true,
-      type: "string",
-    },
-    supplier_name: {
-      required: true,
-      type: "string",
-    },
+
     uniquekey: {
       required: true,
       type: "string",
@@ -39,45 +33,36 @@ module.exports = {
       //   });
       // });
 
-      let existing_email = null;
+      let existing_model = null;
 
-      if (inputs.email !== null && inputs.email !== undefined) {
-        existing_email = await Supplier.findOne({ email: inputs.email });
-      }
-
-      if (existing_email) {
-        return exits.success({
-          status: false,
-          err: "A Supplier found with same primary email address",
+      if (inputs.model !== null && inputs.model !== undefined) {
+        existing_model = await Model.findOne({
+          name: inputs.model,
         });
       }
 
-      var prefix = "SUP";
+      if (existing_model) {
+        return exits.success({
+          status: false,
+          err: "A Model find with the same name",
+        });
+      }
 
-      var generatedid = await sails.helpers.generateCode(
-        (inputs.type = "SUP"),
-        prefix
-      );
-
-      var supplier = await Supplier.create({
-        code: generatedid,
-        name: inputs.supplier_name,
-        contact_person: inputs.contact_person,
-        phone: inputs.phone,
-        email: inputs.email,
+      var model = await Model.create({
+        name: inputs.model,
+        brand: inputs.brand,
         created_by: this.req.token.id,
       }).fetch();
 
       // System Log record
       await SystemLog.create({
         userid: this.req.token.id,
-        info:
-          "Created a supplier of ID :" + supplier.id + " - " + supplier.code,
+        info: "Created a model of ID :" + model.id,
       });
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        model: model,
       });
     } catch (e) {
       const errorInfo =
@@ -86,7 +71,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/create-supplier",
+        path: "api/v1/stock/create-brand",
         info: errorInfo,
       });
       return exits.success({

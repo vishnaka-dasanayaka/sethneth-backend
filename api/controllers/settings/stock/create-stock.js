@@ -1,23 +1,50 @@
+const moment = require("moment");
+
 module.exports = {
-  friendlyName: "Add Client",
+  friendlyName: "Add Brand",
 
   description: "",
 
   inputs: {
-    contact_person: {
+    date: {
       required: true,
-      type: "string",
+      type: "ref",
     },
-    email: {
-      type: "string",
+    category: {
+      type: "number",
       required: true,
     },
-    phone: {
+    brand: {
+      type: "number",
       required: true,
-      type: "string",
     },
-    supplier_name: {
+    model: {
+      type: "number",
       required: true,
+    },
+    supplier: {
+      type: "number",
+      required: true,
+    },
+    purchase_order: {
+      type: "number",
+      allowNull: true,
+    },
+    buying_price: {
+      type: "number",
+      required: true,
+    },
+    selling_price: {
+      type: "number",
+      required: true,
+    },
+    no_of_units: {
+      type: "number",
+      required: true,
+    },
+
+    description: {
+      allowNull: true,
       type: "string",
     },
     uniquekey: {
@@ -39,45 +66,40 @@ module.exports = {
       //   });
       // });
 
-      let existing_email = null;
+      var date = await moment(inputs.date).format("YYYY-MM-DD HH:mm:ss");
 
-      if (inputs.email !== null && inputs.email !== undefined) {
-        existing_email = await Supplier.findOne({ email: inputs.email });
-      }
-
-      if (existing_email) {
-        return exits.success({
-          status: false,
-          err: "A Supplier found with same primary email address",
-        });
-      }
-
-      var prefix = "SUP";
+      var prefix = "STK";
 
       var generatedid = await sails.helpers.generateCode(
-        (inputs.type = "SUP"),
+        (inputs.type = "STK"),
         prefix
       );
 
-      var supplier = await Supplier.create({
+      var stock = await Stock.create({
         code: generatedid,
-        name: inputs.supplier_name,
-        contact_person: inputs.contact_person,
-        phone: inputs.phone,
-        email: inputs.email,
+        adding_date: date,
+        category: inputs.category,
+        brand: inputs.brand,
+        model: inputs.model,
+        supplier: inputs.supplier,
+        purchase_order: inputs.purchase_order,
+        buying_price: inputs.buying_price,
+        selling_price: inputs.selling_price,
+        no_of_units: inputs.no_of_units,
+        description: inputs.description,
+        status: 0,
         created_by: this.req.token.id,
       }).fetch();
 
       // System Log record
       await SystemLog.create({
         userid: this.req.token.id,
-        info:
-          "Created a supplier of ID :" + supplier.id + " - " + supplier.code,
+        info: "Created a stock of ID :" + stock.id,
       });
 
       return exits.success({
         status: true,
-        supplier: supplier,
+        stock: stock,
       });
     } catch (e) {
       const errorInfo =
@@ -86,7 +108,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/supplier/create-supplier",
+        path: "api/v1/stock/create-brand",
         info: errorInfo,
       });
       return exits.success({

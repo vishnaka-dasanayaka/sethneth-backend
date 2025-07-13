@@ -19,7 +19,7 @@ module.exports = {
       type: "number",
     },
     description: {
-      required: true,
+      allowNull: true,
       type: "string",
     },
     uniquekey: {

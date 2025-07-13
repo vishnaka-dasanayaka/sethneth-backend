@@ -31,7 +31,7 @@ module.exports = {
       //   });
       // });
 
-      var purchase_order = await Supplier.findOne({ id: inputs.id });
+      var purchase_order = await PurchaseOrder.findOne({ id: inputs.id });
       if (!purchase_order) {
         return exits.success({
           status: false,

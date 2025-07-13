@@ -183,4 +183,12 @@ module.exports.routes = {
   "POST /api/v1/settings/stock/get-active-po-per-supplier": {
     action: "settings/stock/get-active-po-per-supplier",
   },
+
+  "POST /api/v1/settings/stock/get-stock": {
+    action: "settings/stock/get-stock",
+  },
+
+  "PATCH /api/v1/settings/stock/update-stock-status": {
+    action: "settings/stock/update-stock-status",
+  },
 };

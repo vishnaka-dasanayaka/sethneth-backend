@@ -191,4 +191,22 @@ module.exports.routes = {
   "PATCH /api/v1/settings/stock/update-stock-status": {
     action: "settings/stock/update-stock-status",
   },
+
+  // patient routes
+
+  "POST /api/v1/patients/create-patient": {
+    action: "patients/create-patient",
+  },
+
+  "POST /api/v1/patients/get-all-paged-patients": {
+    action: "patients/get-all-paged-patients",
+  },
+
+  "POST /api/v1/patients/get-patient": {
+    action: "patients/get-patient",
+  },
+
+  "PATCH /api/v1/patients/update-patient-status": {
+    action: "patients/update-patient-status",
+  },
 };

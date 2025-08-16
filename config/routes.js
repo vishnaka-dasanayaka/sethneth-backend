@@ -168,6 +168,13 @@ module.exports.routes = {
     action: "settings/stock/get-all-paged-models",
   },
 
+  "GET /api/v1/settings/stock/get-all-active-models-with-stock": {
+    action: "settings/stock/get-all-active-models-with-stock",
+  },
+  "GET /api/v1/settings/stock/get-all-active-lenses": {
+    action: "settings/stock/get-all-active-lenses",
+  },
+
   "POST /api/v1/settings/stock/get-all-paged-stocks": {
     action: "settings/stock/get-all-paged-stocks",
   },
@@ -192,6 +199,18 @@ module.exports.routes = {
     action: "settings/stock/update-stock-status",
   },
 
+  "POST /api/v1/settings/stock/create-lense": {
+    action: "settings/stock/create-lense",
+  },
+
+  "POST /api/v1/settings/stock/get-all-paged-lenses": {
+    action: "settings/stock/get-all-paged-lenses",
+  },
+
+  "PATCH /api/v1/settings/stock/update-lense-status": {
+    action: "settings/stock/update-lense-status",
+  },
+
   // patient routes
 
   "POST /api/v1/patients/create-patient": {
@@ -208,5 +227,44 @@ module.exports.routes = {
 
   "PATCH /api/v1/patients/update-patient-status": {
     action: "patients/update-patient-status",
+  },
+
+  "GET /api/v1/patients/get-all-active-patients": {
+    action: "patients/get-all-active-patients",
+  },
+
+  // Branches
+
+  "GET /api/v1/branches/get-all-active-branches": {
+    action: "branches/get-all-active-branches",
+  },
+
+  // Orders
+  "POST /api/v1/orders/create-order": {
+    action: "orders/create-order",
+  },
+
+  "POST /api/v1/orders/get-all-paged-orders": {
+    action: "orders/get-all-paged-orders",
+  },
+
+  "POST /api/v1/orders/get-order": {
+    action: "orders/get-order",
+  },
+
+  "POST /api/v1/orders/get-lense-list": {
+    action: "orders/get-lense-list",
+  },
+
+  "POST /api/v1/orders/get-workflow-log": {
+    action: "orders/get-workflow-log",
+  },
+
+  "PATCH /api/v1/orders/update-order-status": {
+    action: "orders/update-order-status",
+  },
+
+  "POST /api/v1/orders/generate-invoice": {
+    action: "orders/generate-invoice",
   },
 };

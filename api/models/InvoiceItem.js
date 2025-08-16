@@ -1,37 +1,26 @@
 /**
- * PurchaseOrder.js
+ * InvoiceItem.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
 
 module.exports = {
-  tableName: "stocks",
+  tableName: "invoice_items",
 
   attributes: {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-
-    code: { type: "string", required: true },
-    adding_date: { type: "ref", columnType: "datetime" },
-    category: { model: "Category" },
-    brand: { model: "Brand" },
-    model: { model: "Model" },
-    supplier: { model: "Supplier" },
-    purchase_order: { model: "PurchaseOrder" },
-    buying_price: { type: "number", required: true },
-    no_of_units: { type: "number", required: true },
-    available_no_of_units: { type: "number", required: true },
-    selling_price: { type: "number", required: true },
+    invoice_id: { model: "Invoice" },
+    order_id: { model: "Order" },
     description: { type: "string", allowNull: true },
-    status: { type: "number", defaultsTo: 0 },
-    created_on: { type: "ref", columnType: "datetime", autoCreatedAt: true },
-    created_by: { model: "User" },
-
-    // 0 - pending
-    // 2  - approved
-    // -2 - rejected
+    unit_price: { type: "number", required: true },
+    total_quantity: { type: "number", required: true },
+    total_price: { type: "number", required: true },
+    discount: { type: "number", defaultsTo: 0 },
+    discounted_price: { type: "number", required: true },
+    item_type: { type: "string", defaultsTo: "ITEM" },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

@@ -267,4 +267,22 @@ module.exports.routes = {
   "POST /api/v1/orders/generate-invoice": {
     action: "orders/generate-invoice",
   },
+
+  // Invoices
+
+  "POST /api/v1/invoices/get-all-paged-invoices": {
+    action: "invoices/get-all-paged-invoices",
+  },
+
+  "POST /api/v1/invoices/get-invoice": {
+    action: "invoices/get-invoice",
+  },
+
+  "POST /api/v1/invoices/get-invoice-items": {
+    action: "invoices/get-invoice-items",
+  },
+
+  "POST /api/v1/invoices/create-inv-item": {
+    action: "invoices/create-inv-item",
+  },
 };

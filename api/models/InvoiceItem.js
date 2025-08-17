@@ -19,6 +19,8 @@ module.exports = {
     total_quantity: { type: "number", required: true },
     total_price: { type: "number", required: true },
     discount: { type: "number", defaultsTo: 0 },
+    frame_discount: { type: "number", defaultsTo: 0 },
+    lense_discount: { type: "number", defaultsTo: 0 },
     discounted_price: { type: "number", required: true },
     item_type: { type: "string", defaultsTo: "ITEM" },
 

@@ -239,6 +239,15 @@ module.exports.routes = {
     action: "branches/get-all-active-branches",
   },
 
+  // Payments
+  "POST /api/v1/payments/create-payment": {
+    action: "payments/create-payment",
+  },
+
+  "POST /api/v1/payments/get-all-paged-payments": {
+    action: "payments/get-all-paged-payments",
+  },
+
   // Orders
   "POST /api/v1/orders/create-order": {
     action: "orders/create-order",
@@ -284,5 +293,9 @@ module.exports.routes = {
 
   "POST /api/v1/invoices/create-inv-item": {
     action: "invoices/create-inv-item",
+  },
+
+  "POST /api/v1/invoices/get-inv-per-patient": {
+    action: "invoices/get-inv-per-patient",
   },
 };

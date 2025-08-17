@@ -29,7 +29,12 @@ module.exports = {
       type: "number",
       required: true,
     },
-    discount: {
+    frame_discount: {
+      type: "number",
+      required: true,
+    },
+
+    lense_discount: {
       type: "number",
       required: true,
     },
@@ -60,7 +65,10 @@ module.exports = {
       var stock = await Stock.findOne({ id: inputs.model });
       var price = stock.selling_price + inputs.lense_price;
       var discounted_price =
-        stock.selling_price + inputs.lense_price - inputs.discount;
+        stock.selling_price +
+        inputs.lense_price -
+        inputs.frame_discount -
+        inputs.lense_discount;
 
       var order = await Order.create({
         code: generatedid,
@@ -68,9 +76,11 @@ module.exports = {
         date: inputs.date,
         branch_id: inputs.branch,
         stock_id: inputs.model,
+        frame_price: stock.selling_price,
         lense_price: inputs.lense_price,
         price: price,
-        discount: inputs.discount,
+        frame_discount: inputs.frame_discount,
+        lense_discount: inputs.lense_discount,
         discounted_price: discounted_price,
         status: 0,
         created_by: this.req.token.id,

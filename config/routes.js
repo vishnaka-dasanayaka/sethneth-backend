@@ -248,6 +248,10 @@ module.exports.routes = {
     action: "payments/get-all-paged-payments",
   },
 
+  "POST /api/v1/payments/get-payment": {
+    action: "payments/get-payment",
+  },
+
   // Orders
   "POST /api/v1/orders/create-order": {
     action: "orders/create-order",

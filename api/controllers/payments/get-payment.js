@@ -1,7 +1,7 @@
 const moment = require("moment");
 
 module.exports = {
-  friendlyName: "Get Order",
+  friendlyName: "Get Payment",
 
   description: "",
 
@@ -16,37 +16,27 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
-      var order = await Order.findOne({
+      var payment = await Payment.findOne({
         id: inputs.id,
       })
-        .populate("patient_id")
-        .populate("branch_id")
-        .populate("created_by")
-        .populate("invoice_id")
-        .populate("stock_id");
+        .populate("patient")
+        .populate("created_by");
 
-      if (order && order.stock_id) {
-        order.stock_id.category = await Category.findOne({
-          id: order.stock_id.category,
-        });
-        order.stock_id.brand = await Brand.findOne({
-          id: order.stock_id.brand,
-        });
-        order.stock_id.model = await Model.findOne({
-          id: order.stock_id.model,
-        });
-      }
-
-      if (!order) {
+      if (!payment) {
         return exits.success({
           status: false,
-          err: "Order is not found",
+          err: "Payment is not found",
         });
       }
+
+      var inv_list = await PaymentInvoice.find({
+        payment_id: inputs.id,
+      }).populate("invoice_id");
 
       return exits.success({
         status: true,
-        order: order,
+        payment: payment,
+        inv_list: inv_list,
       });
     } catch (e) {
       const errorInfo =
@@ -55,7 +45,7 @@ module.exports = {
       //Error Log record
       await ErrorLog.create({
         userid: 1,
-        path: "api/v1/order/get-order",
+        path: "api/v1/payment/get-payment",
         info: errorInfo,
       });
       return exits.success({

@@ -233,6 +233,14 @@ module.exports.routes = {
     action: "patients/get-all-active-patients",
   },
 
+  "POST /api/v1/patients/create-prescription": {
+    action: "patients/create-prescription",
+  },
+
+  "POST /api/v1/patients/get-prescriptions-per-patient": {
+    action: "patients/get-prescriptions-per-patient",
+  },
+
   // Branches
 
   "GET /api/v1/branches/get-all-active-branches": {

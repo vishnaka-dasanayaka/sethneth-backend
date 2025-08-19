@@ -241,6 +241,10 @@ module.exports.routes = {
     action: "patients/get-prescriptions-per-patient",
   },
 
+  "POST /api/v1/patients/get-prescription": {
+    action: "patients/get-prescription",
+  },
+
   // Branches
 
   "GET /api/v1/branches/get-all-active-branches": {
@@ -309,5 +313,9 @@ module.exports.routes = {
 
   "POST /api/v1/invoices/get-inv-per-patient": {
     action: "invoices/get-inv-per-patient",
+  },
+
+  "POST /api/v1/invoices/create-invoice": {
+    action: "invoices/create-invoice",
   },
 };

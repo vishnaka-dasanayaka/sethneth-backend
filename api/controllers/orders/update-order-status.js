@@ -41,6 +41,56 @@ module.exports = {
 
       var from_status = order.status;
 
+      if (!validateStatusTransition(from_status, inputs.status)) {
+        return exits.success({
+          status: false,
+          err: "Stick into the work flow.",
+        });
+      }
+
+      if (from_status == 0 && inputs.status == 2) {
+        // Reduce Stock
+        if (order?.stock_id) {
+          var stock = await Stock.findOne({ id: order.stock_id });
+          var available_no_of_units = stock.available_no_of_units;
+
+          if (available_no_of_units == 0) {
+            return exits.success({
+              status: false,
+              err: "Insufficient Stock",
+            });
+          }
+          await Stock.updateOne({ id: order.stock_id }).set({
+            available_no_of_units: available_no_of_units - 1,
+          });
+        }
+      }
+
+      if (inputs.status == -2 && from_status != 0) {
+        // Increase Stock
+        if (order?.stock_id) {
+          var stock = await Stock.findOne({ id: order.stock_id });
+          var available_no_of_units = stock.available_no_of_units;
+
+          if (stock.no_of_units < available_no_of_units + 1) {
+            return exits.success({
+              status: false,
+              err: "Stock Overloading",
+            });
+          }
+
+          if (order?.invoice_id) {
+            await sails.helpers.cancellations.cancelInvoice.with({
+              inv_id: order.invoice_id,
+            });
+          }
+
+          await Stock.updateOne({ id: order.stock_id }).set({
+            available_no_of_units: available_no_of_units + 1,
+          });
+        }
+      }
+
       await Order.updateOne({ id: inputs.id }).set({
         status: inputs.status,
       });
@@ -54,9 +104,12 @@ module.exports = {
         var stts_str = "Pending";
       }
       if (inputs.status == 2) {
-        var stts_str = "Sent to the workshop";
+        var stts_str = "Confirmed";
       }
       if (inputs.status == 4) {
+        var stts_str = "Sent to the workshop";
+      }
+      if (inputs.status == 6) {
         var stts_str = "Received from workshop";
       }
       if (inputs.status == 10) {
@@ -102,3 +155,20 @@ module.exports = {
     }
   },
 };
+
+function validateStatusTransition(from_status, to_status) {
+  const status_order = [-2, 0, 2, 4, 6, 10];
+
+  if (to_status === -2) {
+    return true;
+  }
+
+  const fromIndex = status_order.indexOf(from_status);
+  const toIndex = status_order.indexOf(to_status);
+
+  if (fromIndex === -1 || toIndex === -1) {
+    return false;
+  }
+
+  return toIndex === fromIndex + 1;
+}

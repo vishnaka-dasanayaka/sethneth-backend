@@ -25,7 +25,10 @@ module.exports = {
     var rows = inputs.event.rows;
 
     // sorting
-    var order_by = " t1.code ";
+    var order_by = " t1.id ";
+    if (inputs.event.sortField == "code") {
+      order_by = " t1.code ";
+    }
     if (inputs.event.sortField == "patient") {
       order_by = " t2.name ";
     } else if (inputs.event.sortField == "date") {

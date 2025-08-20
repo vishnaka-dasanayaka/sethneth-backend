@@ -34,8 +34,6 @@ module.exports = {
         }
       }
 
-      console.log(inv_items);
-
       return exits.success({
         status: true,
         inv_items: inv_items,

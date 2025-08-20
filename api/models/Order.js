@@ -31,8 +31,9 @@ module.exports = {
 
     // -2 - cancelled
     // 0 - pending / took the order
-    // 2 - sent to the workshop
-    // 4 - received from the workshop
+    // 2 - confirmed
+    // 4 - sent to the workshop
+    // 6 - received from the workshop
     // 10 - delivered to the customer
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗

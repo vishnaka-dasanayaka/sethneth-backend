@@ -264,6 +264,10 @@ module.exports.routes = {
     action: "payments/get-payment",
   },
 
+  "PATCH /api/v1/payments/update-payment-status": {
+    action: "payments/update-payment-status",
+  },
+
   // Orders
   "POST /api/v1/orders/create-order": {
     action: "orders/create-order",
@@ -317,5 +321,9 @@ module.exports.routes = {
 
   "POST /api/v1/invoices/create-invoice": {
     action: "invoices/create-invoice",
+  },
+
+  "PATCH /api/v1/invoices/update-invoice-status": {
+    action: "invoices/update-invoice-status",
   },
 };

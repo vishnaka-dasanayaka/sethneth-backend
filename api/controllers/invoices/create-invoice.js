@@ -66,6 +66,7 @@ module.exports = {
 
       return exits.success({
         status: true,
+        inv: inv,
       });
     } catch (e) {
       const errorInfo =

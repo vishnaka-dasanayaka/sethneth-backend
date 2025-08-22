@@ -43,10 +43,27 @@ module.exports = {
           err: "Order is not found",
         });
       }
+      var invoices = [];
+
+      if (order.invoice_id) {
+        var invoice = await Invoice.findOne({ id: order.invoice_id.id });
+        invoices.push(invoice);
+      }
+
+      var prev_inv_list = await OrderPrevInvoice.find({
+        order_id: order.id,
+      }).populate("invoice_id");
+
+      if (prev_inv_list.length > 0) {
+        for (var inv of prev_inv_list) {
+          invoices.push(inv.invoice_id);
+        }
+      }
 
       return exits.success({
         status: true,
         order: order,
+        invoices: invoices,
       });
     } catch (e) {
       const errorInfo =

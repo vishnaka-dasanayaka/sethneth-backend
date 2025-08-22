@@ -18,8 +18,7 @@ module.exports = {
     try {
       var patient = await Patient.findOne({
         id: inputs.id,
-      })
-      .populate("created_by");
+      }).populate("created_by");
 
       if (!patient) {
         return exits.success({
@@ -28,9 +27,29 @@ module.exports = {
         });
       }
 
+      var orders = await Order.find({ patient_id: patient.id }).populate(
+        "stock_id"
+      );
+
+      if (orders.length > 0) {
+        for (var order of orders) {
+          if (order.stock_id?.id) {
+            order.stock_id.model = await Model.findOne({
+              id: order.stock_id.model,
+            });
+          }
+        }
+      }
+
+      var invoices = await Invoice.find({ patient_id: patient.id });
+      var payments = await Payment.find({ patient: patient.id });
+
       return exits.success({
         status: true,
         patient: patient,
+        orders: orders,
+        invoices: invoices,
+        payments: payments,
       });
     } catch (e) {
       const errorInfo =

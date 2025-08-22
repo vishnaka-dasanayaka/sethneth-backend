@@ -18,6 +18,13 @@ module.exports = {
     try {
       var order = await Order.findOne({ id: inputs.id });
 
+      if (order.invoice_id) {
+        await OrderPrevInvoice.create({
+          order_id: order.id,
+          invoice_id: order.invoice_id,
+        });
+      }
+
       var prefix = "INV-" + (await moment(new Date()).format("YYMM"));
 
       var generatedid = await sails.helpers.generateCode("INV", prefix);

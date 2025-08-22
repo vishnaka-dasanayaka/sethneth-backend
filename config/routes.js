@@ -217,6 +217,10 @@ module.exports.routes = {
     action: "patients/create-patient",
   },
 
+  "POST /api/v1/patients/edit-patient": {
+    action: "patients/edit-patient",
+  },
+
   "POST /api/v1/patients/get-all-paged-patients": {
     action: "patients/get-all-paged-patients",
   },

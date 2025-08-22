@@ -73,6 +73,7 @@ module.exports = {
 
       return exits.success({
         status: true,
+        payment_id: payment.id,
       });
     } catch (e) {
       const errorInfo =

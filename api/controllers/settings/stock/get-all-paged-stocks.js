@@ -36,6 +36,8 @@ module.exports = {
       order_by = " t5.name ";
     } else if (inputs.event.sortField == "no_of_units") {
       order_by = " t1.no_of_units ";
+    } else if (inputs.event.sortField == "available_no_of_units") {
+      order_by = " t1.available_no_of_units ";
     } else if (inputs.event.sortField == "status") {
       order_by = " t1.status ";
     }

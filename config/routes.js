@@ -277,6 +277,10 @@ module.exports.routes = {
     action: "orders/create-order",
   },
 
+  "POST /api/v1/orders/edit-order": {
+    action: "orders/edit-order",
+  },
+
   "POST /api/v1/orders/get-all-paged-orders": {
     action: "orders/get-all-paged-orders",
   },
@@ -319,12 +323,20 @@ module.exports.routes = {
     action: "invoices/create-inv-item",
   },
 
+  "POST /api/v1/invoices/delete-inv-item": {
+    action: "invoices/delete-inv-item",
+  },
+
   "POST /api/v1/invoices/get-inv-per-patient": {
     action: "invoices/get-inv-per-patient",
   },
 
   "POST /api/v1/invoices/create-invoice": {
     action: "invoices/create-invoice",
+  },
+
+  "POST /api/v1/invoices/edit-invoice": {
+    action: "invoices/edit-invoice",
   },
 
   "PATCH /api/v1/invoices/update-invoice-status": {

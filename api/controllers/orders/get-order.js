@@ -60,10 +60,28 @@ module.exports = {
         }
       }
 
+      var payments = [];
+
+      if (invoices.length > 0) {
+        for (var inv of invoices) {
+          var payment_per_inv = await PaymentInvoice.find({
+            invoice_id: inv.id,
+          }).populate("payment_id");
+
+          if (payment_per_inv.length > 0) {
+            for (var payment of payment_per_inv) {
+              payment.payment_id.inv = inv;
+              payments.push(payment.payment_id);
+            }
+          }
+        }
+      }
+
       return exits.success({
         status: true,
         order: order,
         invoices: invoices,
+        payments: payments,
       });
     } catch (e) {
       const errorInfo =

@@ -29,9 +29,14 @@ module.exports = {
         });
       }
 
+      var payments = await PaymentInvoice.find({ invoice_id: inv.id }).populate(
+        "payment_id"
+      );
+
       return exits.success({
         status: true,
         inv: inv,
+        payments: payments,
       });
     } catch (e) {
       const errorInfo =

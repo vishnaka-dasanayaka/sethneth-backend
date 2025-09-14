@@ -1,4 +1,5 @@
 const moment = require("moment");
+const moment_tz = require("moment-timezone");
 
 module.exports = {
   friendlyName: "Add Patient",
@@ -82,23 +83,24 @@ module.exports = {
         });
       }
 
-      let existing_phone = null;
+      // let existing_phone = null;
 
-      if (inputs.phone !== null && inputs.phone !== undefined) {
-        existing_phone = await Patient.findOne({
-          phone: inputs.phone,
-        });
-      }
+      // if (inputs.phone !== null && inputs.phone !== undefined) {
+      //   existing_phone = await Patient.findOne({
+      //     phone: inputs.phone,
+      //   });
+      // }
 
-      if (existing_phone) {
-        return exits.success({
-          status: false,
-          err: "A Patient find with the same Contact No",
-        });
-      }
+      // if (existing_phone) {
+      //   return exits.success({
+      //     status: false,
+      //     err: "A Patient find with the same Contact No",
+      //   });
+      // }
 
       if (inputs.dob) {
-        var dob = await moment(inputs.dob).format("YYYY-MM-DD");
+        var offset = moment_tz.tz(sails.config.custom.timezone).format("Z");
+        var dob = await moment(inputs.dob).utc().format("YYYY-MM-DD");
       } else {
         dob = null;
       }

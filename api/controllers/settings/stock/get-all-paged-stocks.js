@@ -52,9 +52,13 @@ module.exports = {
       if (inputs.event.filters.global.matchMode == "contains") {
         var search_text = inputs.event.filters.global.value;
         global_search_filter =
-          "  WHERE (t1.name LIKE '%" +
+          "  WHERE (t2.name LIKE '%" +
           search_text +
-          "%' OR t2.name LIKE '%" +
+          "%' OR t3.name LIKE '%" +
+          search_text +
+          "%' OR t4.name LIKE '%" +
+          search_text +
+          "%' OR t5.name LIKE '%" +
           search_text +
           "%') ";
       }
@@ -80,6 +84,10 @@ module.exports = {
 
     var stocks_count_sql =
       "SELECT COUNT(*) as no_of_purchase_orders from stocks t1 " +
+      "LEFT JOIN categories t2 ON t2.id = t1.category " +
+      "LEFT JOIN brands t3 ON t3.id = t1.brand " +
+      "LEFT JOIN models t4 ON t4.id = t1.model " +
+      "LEFT JOIN suppliers t5 ON t5.id = t1.supplier " +
       global_search_filter;
 
     var no_of_stocks = await sails.sendNativeQuery(stocks_count_sql);

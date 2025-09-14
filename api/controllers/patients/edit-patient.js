@@ -88,24 +88,24 @@ module.exports = {
         });
       }
 
-      let existing_phone = null;
+      // let existing_phone = null;
 
-      if (inputs.phone !== null && inputs.phone !== undefined) {
-        existing_phone = await Patient.findOne({
-          phone: inputs.phone,
-          id: { "!=": inputs.id },
-        });
-      }
+      // if (inputs.phone !== null && inputs.phone !== undefined) {
+      //   existing_phone = await Patient.findOne({
+      //     phone: inputs.phone,
+      //     id: { "!=": inputs.id },
+      //   });
+      // }
 
-      if (existing_phone) {
-        return exits.success({
-          status: false,
-          err: "A Patient find with the same Contact No",
-        });
-      }
+      // if (existing_phone) {
+      //   return exits.success({
+      //     status: false,
+      //     err: "A Patient find with the same Contact No",
+      //   });
+      // }
 
       if (inputs.dob) {
-        var dob = await moment(inputs.dob).format("YYYY-MM-DD");
+        var dob = await moment(inputs.dob).utc().format("YYYY-MM-DD");
       } else {
         dob = null;
       }

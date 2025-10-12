@@ -342,4 +342,33 @@ module.exports.routes = {
   "PATCH /api/v1/invoices/update-invoice-status": {
     action: "invoices/update-invoice-status",
   },
+
+  "POST /api/v1/invoices/create-c-invoice": {
+    action: "invoices/create-c-invoice",
+  },
+
+  "POST /api/v1/invoices/get-all-paged-c-invoices": {
+    action: "invoices/get-all-paged-c-invoices",
+  },
+
+  "POST /api/v1/invoices/create-c-inv-item": {
+    action: "invoices/create-c-inv-item",
+  },
+
+  // Consultation Settinngs
+  "POST /api/v1/settings/consultation/create-cons-type": {
+    action: "settings/consultation/create-cons-type",
+  },
+
+  "POST /api/v1/settings/consultation/get-all-paged-cons-types": {
+    action: "settings/consultation/get-all-paged-cons-types",
+  },
+
+  "PATCH /api/v1/settings/consultation/update-cons-type-status": {
+    action: "settings/consultation/update-cons-type-status",
+  },
+
+  "GET /api/v1/settings/consultation/get-all-active-cons-types": {
+    action: "settings/consultation/get-all-active-cons-types",
+  },
 };

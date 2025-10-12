@@ -58,7 +58,7 @@ module.exports = {
 
     var invoices_sql =
       "SELECT t1.*, t2.name as patient_name from invoices t1 " +
-      "LEFT JOIN patients t2 ON t2.id = t1.patient_id WHERE t1.type = 'NORMAL'" +
+      "LEFT JOIN patients t2 ON t2.id = t1.patient_id WHERE t1.type = 'CONS'" +
       global_search_filter +
       " ORDER by " +
       order_by +
@@ -73,15 +73,15 @@ module.exports = {
 
     var invoices_count_sql =
       "SELECT COUNT(*) as no_of_invoices from invoices t1 " +
-      "LEFT JOIN patients t2 ON t2.id = t1.patient_id WHERE t1.type = 'NORMAL'" +
+      "LEFT JOIN patients t2 ON t2.id = t1.patient_id WHERE t1.type = 'CONS'" +
       global_search_filter;
 
     var no_of_invoices = await sails.sendNativeQuery(invoices_count_sql);
     no_of_invoices = no_of_invoices.rows[0].no_of_invoices;
 
     return exits.success({
-      invoices: invoices,
-      no_of_invoices: no_of_invoices,
+      c_invoices: invoices,
+      no_of_c_invoices: no_of_invoices,
     });
   },
 };

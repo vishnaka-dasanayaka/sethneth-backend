@@ -18,7 +18,15 @@ module.exports = {
       allowNull: true,
       type: "string",
     },
-    price: {
+    consultation_fee: {
+      required: true,
+      type: "number",
+    },
+    institution_fee: {
+      required: true,
+      type: "number",
+    },
+    doctor: {
       required: true,
       type: "number",
     },
@@ -59,6 +67,21 @@ module.exports = {
           err: "Patient not found",
         });
       }
+
+      let doctor = null;
+
+      if (inputs.doctor !== null && inputs.doctor !== undefined) {
+        doctor = await Doctor.findOne({
+          id: inputs.doctor,
+        });
+      }
+
+      if (doctor == null) {
+        return exits.success({
+          status: false,
+          err: "Doctor not found",
+        });
+      }
       var prefix = "C-INV-" + (await moment(new Date()).format("YYMM"));
 
       var generatedid = await sails.helpers.generateCode("C-INV", prefix);
@@ -67,6 +90,7 @@ module.exports = {
         code: generatedid,
         type: "CONS",
         cons_type: inputs.cons_type,
+        doctor_id: doctor.id,
         patient_id: patient.id,
         grosstotal: 0,
         discount: 0,
@@ -78,12 +102,23 @@ module.exports = {
 
       var inv_item = await InvoiceItem.create({
         invoice_id: inv.id,
-        description: inputs.description,
-        unit_price: inputs.price,
+        description: "Consultation Fee",
+        unit_price: inputs.consultation_fee,
         total_quantity: 1,
-        total_price: inputs.price,
+        total_price: inputs.consultation_fee,
+        discount: 0,
+        discounted_price: inputs.consultation_fee,
+        item_type: "CONS",
+      }).fetch();
+
+      var inv_item = await InvoiceItem.create({
+        invoice_id: inv.id,
+        description: "Institution Fee",
+        unit_price: inputs.institution_fee,
+        total_quantity: 1,
+        total_price: inputs.institution_fee,
         discount: inputs.discount,
-        discounted_price: inputs.price - inputs.discount,
+        discounted_price: inputs.institution_fee - inputs.discount,
         item_type: "CONS",
       }).fetch();
 
@@ -91,7 +126,8 @@ module.exports = {
       var discount = inv.discount;
       var paidamount = inv.paidamount;
 
-      var new_grosstotal = grosstotal + inputs.price;
+      var new_grosstotal =
+        grosstotal + inputs.consultation_fee + inputs.institution_fee;
       var new_discount = discount + inputs.discount;
       var new_grandtotal = new_grosstotal - new_discount;
       var new_openbalance = new_grandtotal - paidamount;

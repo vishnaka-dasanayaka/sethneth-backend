@@ -21,7 +21,8 @@ module.exports = {
       })
         .populate("patient_id")
         .populate("created_by")
-        .populate("cons_type");
+        .populate("cons_type")
+        .populate("doctor_id");
 
       if (!inv) {
         return exits.success({

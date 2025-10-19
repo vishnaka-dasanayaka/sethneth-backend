@@ -371,4 +371,20 @@ module.exports.routes = {
   "GET /api/v1/settings/consultation/get-all-active-cons-types": {
     action: "settings/consultation/get-all-active-cons-types",
   },
+
+  "POST /api/v1/settings/consultation/create-doctor": {
+    action: "settings/consultation/create-doctor",
+  },
+
+  "POST /api/v1/settings/consultation/get-all-paged-doctors": {
+    action: "settings/consultation/get-all-paged-doctors",
+  },
+
+  "PATCH /api/v1/settings/consultation/update-doctor-status": {
+    action: "settings/consultation/update-doctor-status",
+  },
+
+  "GET /api/v1/settings/consultation/get-all-active-doctors": {
+    action: "settings/consultation/get-all-active-doctors",
+  },
 };

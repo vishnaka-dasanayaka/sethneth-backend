@@ -23,7 +23,7 @@ module.exports = {
     },
     model: {
       type: "number",
-      required: true,
+      allowNull: true,
     },
     lense: {
       type: "ref",
@@ -31,16 +31,16 @@ module.exports = {
 
     lense_price: {
       type: "number",
-      required: true,
+      allowNull: true,
     },
     frame_discount: {
       type: "number",
-      required: true,
+      allowNull: true,
     },
 
     lense_discount: {
       type: "number",
-      required: true,
+      allowNull: true,
     },
 
     uniquekey: {
@@ -62,10 +62,23 @@ module.exports = {
       //   });
       // });
 
-      var stock = await Stock.findOne({ id: inputs.model });
-      var price = stock.selling_price + inputs.lense_price;
+      if (inputs.model == null) {
+        var stock_selling_price = 0;
+        inputs.frame_discount = 0;
+      } else {
+        var stock = await Stock.findOne({ id: inputs.model });
+        var stock_selling_price = stock.selling_price;
+      }
+
+      if (inputs.lense == null) {
+        inputs.lense_discount = 0;
+        inputs.lense_price = 0;
+        inputs.lense = [];
+      }
+
+      var price = stock_selling_price + inputs.lense_price;
       var discounted_price =
-        stock.selling_price +
+        stock_selling_price +
         inputs.lense_price -
         inputs.frame_discount -
         inputs.lense_discount;
@@ -76,7 +89,7 @@ module.exports = {
           date: inputs.date,
           branch_id: inputs.branch,
           stock_id: inputs.model,
-          frame_price: stock.selling_price,
+          frame_price: stock_selling_price,
           lense_price: inputs.lense_price,
           price: price,
           frame_discount: inputs.frame_discount,

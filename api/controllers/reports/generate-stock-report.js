@@ -39,9 +39,39 @@ module.exports = {
       var stock_summary = await sails.sendNativeQuery(stock_sql);
       stock_summary = stock_summary.rows;
 
+      var totals = {};
+
+      if (stock_summary.length > 0) {
+        var totals = stock_summary.reduce(
+          (acc, item) => {
+            acc.totalAvailableItems += item.available_no_of_units;
+            acc.totalBuyingCost +=
+              item.buying_price * item.available_no_of_units;
+            acc.totalSellingValue +=
+              item.selling_price * item.available_no_of_units;
+            acc.totalProfitMargin +=
+              (item.selling_price - item.buying_price) *
+              item.available_no_of_units;
+
+            return acc;
+          },
+          {
+            totalAvailableItems: 0,
+            totalBuyingCost: 0,
+            totalSellingValue: 0,
+            totalProfitMargin: 0,
+          }
+        );
+
+        for (let key in totals) {
+          totals[key] = Number(totals[key].toFixed(2));
+        }
+      }
+
       return exits.success({
         status: true,
         stock_summary: stock_summary,
+        totals: totals,
       });
     } catch (e) {
       const errorInfo =

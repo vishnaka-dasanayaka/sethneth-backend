@@ -45,13 +45,10 @@ module.exports = {
         var totals = stock_summary.reduce(
           (acc, item) => {
             acc.totalAvailableItems += item.available_no_of_units;
-            acc.totalBuyingCost +=
-              item.buying_price * item.available_no_of_units;
-            acc.totalSellingValue +=
-              item.selling_price * item.available_no_of_units;
+            acc.totalBuyingCost += item.buying_price * item.no_of_units;
+            acc.totalSellingValue += item.selling_price * item.no_of_units;
             acc.totalProfitMargin +=
-              (item.selling_price - item.buying_price) *
-              item.available_no_of_units;
+              (item.selling_price - item.buying_price) * item.no_of_units;
 
             return acc;
           },

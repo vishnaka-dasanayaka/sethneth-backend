@@ -387,4 +387,10 @@ module.exports.routes = {
   "GET /api/v1/settings/consultation/get-all-active-doctors": {
     action: "settings/consultation/get-all-active-doctors",
   },
+
+  // reports
+
+  "POST /api/v1/reports/generate-stock-report": {
+    action: "reports/generate-stock-report",
+  },
 };

@@ -42,6 +42,13 @@ module.exports = {
 
       var from_status = inv.status;
 
+      if (from_status == inputs.status) {
+        return exits.success({
+          status: false,
+          err: "Status already updated",
+        });
+      }
+
       if (inputs.status == -2) {
         await sails.helpers.cancellations.cancelInvoice.with({
           inv_id: inv.id,
@@ -49,6 +56,28 @@ module.exports = {
       }
 
       if (from_status == 2) {
+        var inv_items = await InvoiceItem.find({ invoice_id: inv.id });
+
+        if (inv_items.length > 0) {
+          for (var item of inv_items) {
+            if (item.stock_id != null) {
+              var stock = await Stock.findOne({ id: item.stock_id });
+              var available_no_of_units = stock.available_no_of_units;
+
+              if (stock.no_of_units < available_no_of_units + 1) {
+                return exits.success({
+                  status: false,
+                  err: "Stock Overloading",
+                });
+              }
+
+              await Stock.updateOne({ id: item.stock_id }).set({
+                available_no_of_units: available_no_of_units + 1,
+              });
+            }
+          }
+        }
+
         var payment_inv = await PaymentInvoice.find({ invoice_id: inv.id });
         if (payment_inv.length > 0) {
           for (var item of payment_inv) {
@@ -58,6 +87,29 @@ module.exports = {
               return exits.success({
                 status: false,
                 err: "Cannot update status, since there are approved payments associated with the invoice",
+              });
+            }
+          }
+        }
+      }
+
+      if (inputs.status == 2) {
+        var inv_items = await InvoiceItem.find({ invoice_id: inv.id });
+
+        if (inv_items.length > 0) {
+          for (var item of inv_items) {
+            if (item.stock_id != null) {
+              var stock = await Stock.findOne({ id: item.stock_id });
+              var available_no_of_units = stock.available_no_of_units;
+
+              if (available_no_of_units == 0) {
+                return exits.success({
+                  status: false,
+                  err: "Insufficient Stock",
+                });
+              }
+              await Stock.updateOne({ id: item.stock_id }).set({
+                available_no_of_units: available_no_of_units - 1,
               });
             }
           }

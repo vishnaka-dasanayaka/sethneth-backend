@@ -124,6 +124,7 @@ module.exports = {
           discount: inputs.discount,
           discounted_price: tot_price - inputs.discount,
           item_type: stock.category.name,
+          stock_id: stock.id,
         }).fetch();
 
         var grosstotal = existing_inv.grosstotal;

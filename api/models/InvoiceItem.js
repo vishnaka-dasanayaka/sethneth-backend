@@ -14,6 +14,7 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
     invoice_id: { model: "Invoice" },
     order_id: { model: "Order" },
+    stock_id: { model: "Stock" },
     description: { type: "string", allowNull: true },
     unit_price: { type: "number", required: true },
     total_quantity: { type: "number", required: true },

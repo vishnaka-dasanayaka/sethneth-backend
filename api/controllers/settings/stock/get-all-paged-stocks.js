@@ -54,6 +54,8 @@ module.exports = {
         global_search_filter =
           "  WHERE (t2.name LIKE '%" +
           search_text +
+          "%' OR t1.code LIKE '%" +
+          search_text +
           "%' OR t3.name LIKE '%" +
           search_text +
           "%' OR t4.name LIKE '%" +

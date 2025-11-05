@@ -144,6 +144,10 @@ module.exports.routes = {
     action: "settings/stock/create-brand",
   },
 
+  "PATCH /api/v1/settings/stock/update-brand-status": {
+    action: "settings/stock/update-brand-status",
+  },
+
   "GET /api/v1/settings/stock/get-active-categories": {
     action: "settings/stock/get-active-categories",
   },

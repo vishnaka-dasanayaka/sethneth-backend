@@ -14,7 +14,7 @@ module.exports = {
         "LEFT JOIN models t2 ON t1.model = t2.id " +
         "LEFT JOIN brands t3 ON t3.id = t1.brand " +
         "LEFT JOIN categories t4 ON t4.id = t1.category " +
-        "WHERE t2.status=1;";
+        "WHERE t2.status=1 AND t1.status=2;";
 
       var stocks = await sails.sendNativeQuery(stock_sql);
 

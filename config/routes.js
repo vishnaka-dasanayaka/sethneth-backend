@@ -83,8 +83,39 @@ module.exports.routes = {
   "GET /api/v1/settings/user/validate-logged-in": {
     action: "settings/user/validate-logged-in",
   },
+  "GET /api/v1/settings/user/get-user-levels": {
+    action: "settings/user/get-user-levels",
+  },
 
   // settings
+
+  // users
+
+  "POST /api/v1/settings/users/get-paged-users": {
+    action: "settings/users/get-paged-users",
+  },
+  "POST /api/v1/settings/users": {
+    action: "settings/users/create-user",
+  },
+  "GET /api/v1/settings/users/:id": {
+    action: "settings/users/get-user",
+  },
+  "PATCH /api/v1/settings/users/update-user-status": {
+    action: "settings/users/update-user-status",
+  },
+  "GET /api/v1/settings/users/get-user-levels": {
+    action: "settings/users/get-user-levels",
+  },
+  "POST /api/v1/settings/users/get-all-paged-user-levels": {
+    action: "settings/users/get-all-paged-user-levels",
+  },
+  "POST /api/v1/settings/users/create-user-level": {
+    action: "settings/users/create-user-level",
+  },
+
+  "POST /api/v1/settings/users/get-permission-by-userlevel": {
+    action: "settings/users/get-permission-by-userlevel",
+  },
 
   // supplier
   "POST /api/v1/settings/supplier/create-supplier": {

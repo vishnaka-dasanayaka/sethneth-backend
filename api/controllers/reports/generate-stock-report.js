@@ -34,7 +34,8 @@ module.exports = {
         "LEFT JOIN categories t2 ON t2.id = t1.category " +
         "LEFT JOIN brands t3 ON t3.id = t1.brand " +
         "LEFT JOIN models t4 ON t4.id = t1.model " +
-        "LEFT JOIN suppliers t5 ON t5.id = t1.supplier";
+        "LEFT JOIN suppliers t5 ON t5.id = t1.supplier " +
+        "WHERE t1.status = 2";
 
       var stock_summary = await sails.sendNativeQuery(stock_sql);
       stock_summary = stock_summary.rows;
@@ -45,6 +46,8 @@ module.exports = {
         var totals = stock_summary.reduce(
           (acc, item) => {
             acc.totalAvailableItems += item.available_no_of_units;
+            console.log(acc.totalAvailableItems);
+
             acc.totalBuyingCost += item.buying_price * item.no_of_units;
             acc.totalSellingValue += item.selling_price * item.no_of_units;
             acc.totalProfitMargin +=

@@ -41,7 +41,7 @@ module.exports = {
     if (!userRecord) {
       return exits.OtherError({
         status: false,
-        err: "The provided username and password combination does not match any user in the database.",
+        err: "Invalid username or password. Please try again.",
       });
     }
 
@@ -81,7 +81,7 @@ module.exports = {
       .intercept("incorrect", (err) => {
         return exits.OtherError({
           status: false,
-          err: "The provided username and password combination does not match any user in the database.",
+          err: "Invalid username or password. Please try again.",
         });
       });
 
@@ -156,6 +156,8 @@ module.exports = {
       ip: this.req.ip,
       req_headers: JSON.stringify(this.req.headers),
     });
+
+    await sails.helpers.permissionRoller();
 
     //this.req.session.userId = userRecord.id;
 

@@ -11,6 +11,10 @@ module.exports = {
     var id = this.req.token.id;
 
     var userRecord = await User.findOne({ id: id }).populate("perm_list");
+
+    var userlevel = await UserRole.findOne({ id: userRecord.userlevel });
+
+    userRecord.rolename = userlevel.rolename;
     if (!userRecord) {
       return exits.success({
         status: false,

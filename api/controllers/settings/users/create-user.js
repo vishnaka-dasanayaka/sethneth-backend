@@ -92,6 +92,25 @@ module.exports = {
         password: await sails.helpers.passwords.hashPassword("temp_password"),
       }).fetch();
 
+      var default_permission = await PermissionGroup.find({
+        role_id: inputs.userlevel,
+      });
+
+      for (perm of default_permission) {
+        var permission_exist = await UserPermission.findOne({
+          userid: user.id,
+          perm_id: perm.perm_id,
+        });
+        if (permission_exist) {
+          continue;
+        }
+        await UserPermission.create({
+          userid: user.id,
+          perm_id: perm.perm_id,
+          perm_level: perm.default_perm,
+        });
+      }
+
       // System Log record
       await SystemLog.create({
         userid: this.req.token.id,

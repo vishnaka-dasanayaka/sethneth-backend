@@ -89,6 +89,14 @@ module.exports.routes = {
 
   // settings
 
+  // notes
+  "POST /api/v1/settings/add-note": {
+    action: "settings/add-note",
+  },
+  "POST /api/v1/settings/get-notes": {
+    action: "settings/get-notes",
+  },
+
   // users
 
   "POST /api/v1/settings/users/get-paged-users": {
@@ -123,6 +131,10 @@ module.exports.routes = {
 
   "POST /api/v1/settings/users/get-user-list": {
     action: "settings/users/get-user-list",
+  },
+
+  "POST /api/v1/settings/users/change-password": {
+    action: "settings/users/change-password",
   },
 
   // supplier

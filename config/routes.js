@@ -93,8 +93,14 @@ module.exports.routes = {
   "POST /api/v1/settings/add-note": {
     action: "settings/add-note",
   },
+  "PATCH /api/v1/settings/update-note": {
+    action: "settings/update-note",
+  },
   "POST /api/v1/settings/get-notes": {
     action: "settings/get-notes",
+  },
+  "POST /api/v1/settings/update-note-status": {
+    action: "settings/update-note-status",
   },
 
   // users

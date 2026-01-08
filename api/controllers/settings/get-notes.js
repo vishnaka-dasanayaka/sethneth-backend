@@ -21,6 +21,7 @@ module.exports = {
       var notes = await Note.find({
         type: inputs.type,
         f_key: inputs.f_key,
+        status: 2,
       })
         .populate("created_by")
         .populate("updated_by");

@@ -103,6 +103,11 @@ module.exports.routes = {
     action: "settings/update-note-status",
   },
 
+  // Dashboard
+  "GET /api/v1/settings/get-dashboard-data": {
+    action: "settings/get-dashboard-data",
+  },
+
   // users
 
   "POST /api/v1/settings/users/get-paged-users": {

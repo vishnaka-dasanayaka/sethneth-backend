@@ -25,6 +25,8 @@ module.exports = {
     two_factor_secret: { type: "string", allowNull: true },
     two_factor_secret_string: { type: "string", allowNull: true },
     two_factor_status: { type: "number", defaultsTo: 0 },
+    branch: { model: "Branch" },
+    session_confirmed_branch: { type: "number", defaultsTo: 0 },
 
     //  ╔═╗╔╦╗╔╗ ╔═╗╔╦╗╔═╗
     //  ║╣ ║║║╠╩╗║╣  ║║╚═╗

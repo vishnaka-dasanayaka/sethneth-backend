@@ -14,6 +14,7 @@ module.exports = {
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
 
     code: { type: "string", required: true },
+    branch: { model: "Branch" },
     adding_date: { type: "ref", columnType: "datetime" },
     category: { model: "Category" },
     brand: { model: "Brand" },

@@ -108,6 +108,18 @@ module.exports.routes = {
     action: "settings/get-dashboard-data",
   },
 
+  "GET /api/v1/settings/branch-confirm": {
+    action: "settings/branch-confirm",
+  },
+
+  "GET /api/v1/settings/remove-session-branch": {
+    action: "settings/remove-session-branch",
+  },
+
+  "PATCH /api/v1/settings/set-session-branch": {
+    action: "settings/set-session-branch",
+  },
+
   // users
 
   "POST /api/v1/settings/users/get-paged-users": {

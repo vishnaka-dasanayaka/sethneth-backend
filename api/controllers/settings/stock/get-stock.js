@@ -24,6 +24,7 @@ module.exports = {
         .populate("model")
         .populate("supplier")
         .populate("purchase_order")
+        .populate("branch")
         .populate("created_by");
 
       if (!stock) {

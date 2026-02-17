@@ -112,10 +112,6 @@ module.exports.routes = {
     action: "settings/branch-confirm",
   },
 
-  "GET /api/v1/settings/remove-session-branch": {
-    action: "settings/remove-session-branch",
-  },
-
   "PATCH /api/v1/settings/set-session-branch": {
     action: "settings/set-session-branch",
   },

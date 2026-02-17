@@ -151,6 +151,10 @@ module.exports = {
       }
     }
 
+    await User.updateOne({ id: userRecord.id }).set({
+      session_confirmed_branch: 0,
+    });
+
     await LoginHistory.create({
       userid: userRecord.id,
       ip: this.req.ip,

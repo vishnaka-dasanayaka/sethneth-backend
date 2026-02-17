@@ -40,6 +40,8 @@ module.exports = {
       order_by = " t1.available_no_of_units ";
     } else if (inputs.event.sortField == "status") {
       order_by = " t1.status ";
+    } else if (inputs.event.sortField == "branch") {
+      order_by = " t6.code ";
     }
 
     var order_method = " ASC ";
@@ -67,11 +69,12 @@ module.exports = {
     }
 
     var stocks_sql =
-      "SELECT t1.*, t2.name AS category_name, t3.name AS brand_name, t4.name AS model_name, t5.name AS supplier_name from stocks t1 " +
+      "SELECT t1.*, t2.name AS category_name, t3.name AS brand_name, t4.name AS model_name, t5.name AS supplier_name, t6.code AS branch_code from stocks t1 " +
       "LEFT JOIN categories t2 ON t2.id = t1.category " +
       "LEFT JOIN brands t3 ON t3.id = t1.brand " +
       "LEFT JOIN models t4 ON t4.id = t1.model " +
       "LEFT JOIN suppliers t5 ON t5.id = t1.supplier " +
+      "LEFT JOIN branches t6 ON t6.id = t1.branch " +
       global_search_filter +
       " ORDER by " +
       order_by +
@@ -90,6 +93,7 @@ module.exports = {
       "LEFT JOIN brands t3 ON t3.id = t1.brand " +
       "LEFT JOIN models t4 ON t4.id = t1.model " +
       "LEFT JOIN suppliers t5 ON t5.id = t1.supplier " +
+      "LEFT JOIN branches t6 ON t6.id = t1.branch " +
       global_search_filter;
 
     var no_of_stocks = await sails.sendNativeQuery(stocks_count_sql);

@@ -74,7 +74,17 @@ module.exports = {
         dateField: "created_on",
       });
 
-      const inventory_value = await sails.helpers.dashboard.inventoryValue();
+      var perm_list = await UserPermission.find({ userid: this.req.token.id });
+
+      const hasInventoryPermission = perm_list.some(
+        (p) => Number(p.perm_id) === 12
+      );
+
+      let inventory_value = {};
+
+      if (hasInventoryPermission) {
+        inventory_value = await sails.helpers.dashboard.inventoryValue();
+      }
 
       return exits.success({
         status: true,

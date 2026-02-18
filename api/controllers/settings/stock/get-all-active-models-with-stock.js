@@ -9,12 +9,17 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
+      var user = await User.findOne({ id: this.req.token.id });
+
       var stock_sql =
-        "SELECT t1.* , t2.name as model_name, t3.name as brand_name, t4.name as category_name FROM stocks t1 " +
+        "SELECT t1.* , t2.name as model_name, t3.name as brand_name, t4.name as category_name, t5.code AS branch_code FROM stocks t1 " +
         "LEFT JOIN models t2 ON t1.model = t2.id " +
         "LEFT JOIN brands t3 ON t3.id = t1.brand " +
         "LEFT JOIN categories t4 ON t4.id = t1.category " +
-        "WHERE t2.status=1 AND t1.status=2;";
+        "LEFT JOIN branches t5 ON t5.id = t1.branch " +
+        "WHERE t2.status=1 AND t1.status=2 AND t1.branch = '" +
+        user.branch +
+        "';";
 
       var stocks = await sails.sendNativeQuery(stock_sql);
 

@@ -238,6 +238,14 @@ module.exports.routes = {
     action: "settings/stock/create-stock",
   },
 
+  "POST /api/v1/settings/stock/transfer-bulk-stock": {
+    action: "settings/stock/transfer-bulk-stock",
+  },
+
+  "POST /api/v1/settings/stock/transfer-stock": {
+    action: "settings/stock/transfer-stock",
+  },
+
   "POST /api/v1/settings/stock/get-all-paged-models": {
     action: "settings/stock/get-all-paged-models",
   },

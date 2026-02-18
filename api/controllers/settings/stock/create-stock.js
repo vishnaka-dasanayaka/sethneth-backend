@@ -72,7 +72,7 @@ module.exports = {
 
       var generatedid = await sails.helpers.generateCode(
         (inputs.type = "STK"),
-        prefix
+        prefix,
       );
 
       var stock = await Stock.create({
@@ -89,6 +89,7 @@ module.exports = {
         available_no_of_units: inputs.no_of_units,
         description: inputs.description,
         status: 0,
+        branch: 1,
         created_by: this.req.token.id,
       }).fetch();
 

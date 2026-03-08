@@ -34,9 +34,19 @@ module.exports = {
         });
       }
 
+      var stock_transfer_notes = await StockTransferNote.find({
+        or: [{ from_stock: stock.id }, { to_stock: stock.id }],
+      })
+        .populate("from_branch")
+        .populate("from_stock")
+        .populate("to_branch")
+        .populate("created_by")
+        .populate("to_stock");
+
       return exits.success({
         status: true,
         stock: stock,
+        stock_transfer_notes: stock_transfer_notes,
       });
     } catch (e) {
       const errorInfo =

@@ -19,6 +19,12 @@ module.exports = {
     model: {
       type: "ref",
     },
+    branch: {
+      type: "ref",
+    },
+    status: {
+      type: "ref",
+    },
   },
 
   exits: {},
@@ -26,16 +32,65 @@ module.exports = {
   fn: async function (inputs, exits) {
     try {
       var supplier_filter = "";
-      var brand_filter = "";
       var model_filter = "";
+      var branch_filter = "";
+      var status_filter = "";
+      var date_filter = "";
+
+      if (inputs.branch && inputs.branch.length > 0) {
+        model_filter = " AND t1.model IN ( " + inputs.model + " ) ";
+      }
+
+      if (inputs.status && inputs.status.length > 0) {
+        status_filter = " AND t1.status IN ( " + inputs.status + " ) ";
+      }
+
+      if (inputs.model && inputs.model.length > 0) {
+        branch_filter = " AND t1.branch IN ( " + inputs.branch + " ) ";
+      }
+
+      if (inputs.supplier && inputs.supplier.length > 0) {
+        const supplierIds = inputs.supplier.filter((id) => id !== null);
+
+        if (inputs.supplier.includes(null) && supplierIds.length > 0) {
+          supplier_filter = ` AND (t1.supplier IN (${supplierIds.join(",")}) OR t1.supplier IS NULL) `;
+        } else if (inputs.supplier.includes(null)) {
+          supplier_filter = " AND t1.supplier IS NULL ";
+        } else {
+          supplier_filter = ` AND t1.supplier IN (${supplierIds.join(",")}) `;
+        }
+      }
+
+      if (inputs.from_date) {
+        if (inputs.to_date == null)
+          return exits.success({
+            status: false,
+            err: "Invalid Date Range",
+          });
+      }
+
+      if (inputs.from_date && inputs.to_date) {
+        date_filter =
+          " AND t1.adding_date BETWEEN '" +
+          inputs.from_date +
+          "' AND '" +
+          inputs.to_date +
+          "'";
+      }
 
       var stock_sql =
-        "SELECT t1.*, t2.name AS category_name, t3.name AS brand_name, t4.name AS model_name, t5.name AS supplier_name FROM stocks t1 " +
+        "SELECT t1.*, t2.name AS category_name, t3.name AS brand_name, t4.name AS model_name, t5.name AS supplier_name, t6.code AS branch_code FROM stocks t1 " +
         "LEFT JOIN categories t2 ON t2.id = t1.category " +
         "LEFT JOIN brands t3 ON t3.id = t1.brand " +
         "LEFT JOIN models t4 ON t4.id = t1.model " +
         "LEFT JOIN suppliers t5 ON t5.id = t1.supplier " +
-        "WHERE t1.status = 2";
+        "LEFT JOIN branches t6 ON t6.id = t1.branch " +
+        "WHERE TRUE " +
+        branch_filter +
+        model_filter +
+        status_filter +
+        date_filter +
+        supplier_filter;
 
       var stock_summary = await sails.sendNativeQuery(stock_sql);
       stock_summary = stock_summary.rows;
@@ -46,7 +101,6 @@ module.exports = {
         var totals = stock_summary.reduce(
           (acc, item) => {
             acc.totalAvailableItems += item.available_no_of_units;
-            console.log(acc.totalAvailableItems);
 
             acc.totalBuyingCost += item.buying_price * item.no_of_units;
             acc.totalSellingValue += item.selling_price * item.no_of_units;
@@ -60,7 +114,7 @@ module.exports = {
             totalBuyingCost: 0,
             totalSellingValue: 0,
             totalProfitMargin: 0,
-          }
+          },
         );
 
         for (let key in totals) {

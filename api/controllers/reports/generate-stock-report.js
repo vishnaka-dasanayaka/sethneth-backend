@@ -37,7 +37,7 @@ module.exports = {
       var status_filter = "";
       var date_filter = "";
 
-      if (inputs.branch && inputs.branch.length > 0) {
+      if (inputs.model && inputs.model.length > 0) {
         model_filter = " AND t1.model IN ( " + inputs.model + " ) ";
       }
 
@@ -45,7 +45,7 @@ module.exports = {
         status_filter = " AND t1.status IN ( " + inputs.status + " ) ";
       }
 
-      if (inputs.model && inputs.model.length > 0) {
+      if (inputs.branch && inputs.branch.length > 0) {
         branch_filter = " AND t1.branch IN ( " + inputs.branch + " ) ";
       }
 

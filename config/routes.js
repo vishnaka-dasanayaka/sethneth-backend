@@ -499,4 +499,16 @@ module.exports.routes = {
   "POST /api/v1/reports/generate-stock-report": {
     action: "reports/generate-stock-report",
   },
+
+  "POST /api/v1/reports/generate-user-report": {
+    action: "reports/generate-user-report",
+  },
+
+  "POST /api/v1/reports/generate-patient-report": {
+    action: "reports/generate-patient-report",
+  },
+
+  "POST /api/v1/reports/generate-supplier-report": {
+    action: "reports/generate-supplier-report",
+  },
 };

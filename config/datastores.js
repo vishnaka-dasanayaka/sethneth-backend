@@ -49,7 +49,7 @@ module.exports.datastores = {
     // url: "mysql://sarangab:joqE4vSbik=aBTxaQq4?@your-db-host:3306/sethnethDB",
 
     adapter: "sails-mysql",
-    url: "mysql://admin:0svYx5CCPzafD2e0F77v@rds-1.c7w2qm68g4by.ap-southeast-1.rds.amazonaws.com:3306/sethneth",
-    // url: "mysql://root:root@127.0.0.1:3306/sethneth",
+    // url: "mysql://admin:0svYx5CCPzafD2e0F77v@rds-1.c7w2qm68g4by.ap-southeast-1.rds.amazonaws.com:3306/sethneth",
+    url: "mysql://root:root@127.0.0.1:3306/sethneth",
   },
 };

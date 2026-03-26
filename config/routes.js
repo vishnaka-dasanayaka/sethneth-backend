@@ -339,10 +339,28 @@ module.exports.routes = {
     action: "patients/get-prescription",
   },
 
+  // HR
+
+  "POST /api/v1/hr/add-checkin": {
+    action: "hr/add-checkin",
+  },
+
+  "POST /api/v1/hr/add-checkout": {
+    action: "hr/add-checkout",
+  },
+
+  "GET /api/v1/hr/get-last-checkin": {
+    action: "hr/get-last-checkin",
+  },
+
   // Branches
 
   "GET /api/v1/branches/get-all-active-branches": {
     action: "branches/get-all-active-branches",
+  },
+
+  "POST /api/v1/branches/add-lat-long": {
+    action: "branches/add-lat-long",
   },
 
   "POST /api/v1/settings/branch/get-all-paged-branches": {

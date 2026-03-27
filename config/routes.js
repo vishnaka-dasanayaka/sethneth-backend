@@ -108,6 +108,10 @@ module.exports.routes = {
     action: "settings/get-dashboard-data",
   },
 
+  "GET /api/v1/settings/get-dashboard-chart-data": {
+    action: "settings/get-dashboard-chart-data",
+  },
+
   "GET /api/v1/settings/branch-confirm": {
     action: "settings/branch-confirm",
   },

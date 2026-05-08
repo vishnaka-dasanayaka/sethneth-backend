@@ -522,6 +522,10 @@ module.exports.routes = {
     action: "reports/generate-stock-report",
   },
 
+  "POST /api/v1/reports/generate-order-report": {
+    action: "reports/generate-order-report",
+  },
+
   "POST /api/v1/reports/generate-user-report": {
     action: "reports/generate-user-report",
   },

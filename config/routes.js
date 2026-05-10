@@ -537,4 +537,8 @@ module.exports.routes = {
   "POST /api/v1/reports/generate-supplier-report": {
     action: "reports/generate-supplier-report",
   },
+
+  "POST /api/v1/reports/generate-attendance-report": {
+    action: "reports/generate-attendance-report",
+  },
 };

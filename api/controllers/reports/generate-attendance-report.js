@@ -49,21 +49,27 @@ module.exports = {
         "  t1.id, " +
         "  t1.userid, " +
         "  CONCAT(t2.firstname, ' ', t2.lastname) AS user, " +
-        "  NULL AS branch, " +
+        "  t1.branch, " +
         "  DATE(t1.checkin) AS date, " +
         "  t1.checkin, " +
         "  t1.checkout, " +
         "  TIMESTAMPDIFF(MINUTE, t1.checkin, t1.checkout) AS duration_minutes, " +
-        "  t1.status AS session_completed " +
+        "  t1.status AS session_completed, " +
+        "  t3.code AS branch_code, t3.name AS branch_name " +
         "FROM attendance t1 " +
         "LEFT JOIN users t2 ON t1.userid = t2.id " +
+        "LEFT JOIN branches t3 ON t3.id = t1.branch " +
         "WHERE TRUE " +
         user_filter +
         month_filter +
         " ORDER BY t1.userid ASC, t1.checkin ASC ";
 
+      console.log(attendance_sql);
+
       var attendance_summary = await sails.sendNativeQuery(attendance_sql);
       attendance_summary = attendance_summary.rows;
+
+      console.log(attendance_summary);
 
       return exits.success({
         status: true,

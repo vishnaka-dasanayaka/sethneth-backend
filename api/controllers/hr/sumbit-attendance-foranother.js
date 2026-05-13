@@ -1,3 +1,4 @@
+const { type } = require("express/lib/response");
 const moment = require("moment");
 
 module.exports = {
@@ -22,6 +23,10 @@ module.exports = {
     },
     checkin_time: {
       type: "ref",
+    },
+    branch: {
+      type: "number",
+      required: true,
     },
   },
 
@@ -55,6 +60,7 @@ module.exports = {
         }).set({
           checkin: checkinDateTime.toDate(),
           checkout: checkoutDateTime.toDate(),
+          branch: inputs.branch,
         });
 
         await SystemLog.create({
@@ -88,6 +94,7 @@ module.exports = {
           checkout: checkoutDateTime.toDate(),
           created_by: this.req.token.id,
           status: 1,
+          branch: inputs.branch,
         });
 
         await SystemLog.create({

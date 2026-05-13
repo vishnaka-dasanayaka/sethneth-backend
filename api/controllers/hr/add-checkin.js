@@ -121,6 +121,7 @@ module.exports = {
         checkin_longitude: inputs.lng,
         created_by: this.req.token.id,
         status: 0,
+        branch: branch.id,
       });
 
       return exits.success({

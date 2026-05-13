@@ -12,6 +12,7 @@ module.exports = {
       var last_checkin = await Attendance.find({
         userid: this.req.token.id,
       })
+        .populate("branch")
         .sort("created_on DESC") // latest first
         .limit(30);
 

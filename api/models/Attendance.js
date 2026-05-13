@@ -22,6 +22,7 @@ module.exports = {
     checkin_longitude: { type: "number", allowNull: true },
     checkout_latitude: { type: "number", allowNull: true },
     checkout_longitude: { type: "number", allowNull: true },
+    branch: { model: "Branch" },
 
     // 0 - started
     // 1 - finished

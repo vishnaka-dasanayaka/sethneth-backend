@@ -128,6 +128,9 @@ module.exports.routes = {
   "POST /api/v1/settings/users": {
     action: "settings/users/create-user",
   },
+  "POST /api/v1/settings/users/edit-user": {
+    action: "settings/users/edit-user",
+  },
   "GET /api/v1/settings/users/:id": {
     action: "settings/users/get-user",
   },

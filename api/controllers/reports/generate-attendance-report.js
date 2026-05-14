@@ -9,9 +9,11 @@ module.exports = {
     },
     month: {
       type: "number",
+      required: true,
     },
     year: {
       type: "number",
+      required: true,
     },
   },
 
@@ -64,12 +66,8 @@ module.exports = {
         month_filter +
         " ORDER BY t1.userid ASC, t1.checkin ASC ";
 
-      console.log(attendance_sql);
-
       var attendance_summary = await sails.sendNativeQuery(attendance_sql);
       attendance_summary = attendance_summary.rows;
-
-      console.log(attendance_summary);
 
       return exits.success({
         status: true,

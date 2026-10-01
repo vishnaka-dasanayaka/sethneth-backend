@@ -41,6 +41,15 @@ module.exports.datastores = {
     // password: "root",
     // database: "sethneth",
 
+    typeCast: (field, next) => {
+      if (field.type === "DECIMAL" || field.type === "NEWDECIMAL") {
+        const value = field.string();
+        return value === null ? null : Number(value);
+      }
+
+      return next();
+    },
+
     ssl: {
       rejectUnauthorized: false,
     },

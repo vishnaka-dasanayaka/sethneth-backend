@@ -10,6 +10,8 @@ module.exports = {
   fn: async function (inputs, exits) {
     var id = this.req.token.id;
 
+    console.log(id);
+
     var userRecord = await User.findOne({ id: id })
       .populate("perm_list")
       .populate("branch");
